@@ -150,7 +150,7 @@ app.get("/messages", async (req, res) => {
     try {
 
         const messageList = await messages.find().toArray();
-        if(messageList > limit && limit !== 0){
+        if(messageList.length > limit && limit !== 0){
             
         }
 
