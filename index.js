@@ -49,7 +49,7 @@ app.post("/participants", async (req, res) => {
     try {
         const verifyUser = await users.findOne({ name: user.name });
         if(verifyUser){
-            
+            return res.status(409).send({ message: 'User já utilizado, favor escolher um diferente!' })
         }
 
 	} catch (err) {
