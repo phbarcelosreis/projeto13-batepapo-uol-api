@@ -45,7 +45,6 @@ const messageJoi = Joi.object({
 app.post("/participants", async (req, res) => {
 
     const user = req.body;
-    console.log(user)
 
     try {
 
@@ -57,7 +56,7 @@ app.post("/participants", async (req, res) => {
             return res.status(409).send({ message: 'User já utilizado, favor escolher um diferente!' })
         }
 
-        const validation = userSchema.validate(userJoi, { abortEarly: false });
+        const validation = userJoi.validate(user, { abortEarly: false });
 
         if (validation.error) {
             const vlError = validation.error.details.map(
@@ -74,7 +73,7 @@ app.post("/participants", async (req, res) => {
 			type: 'status',
 			time: formatTime
         });
-        res.sendStatus(201);
+        res.sendStatus(201)
 
 
     } catch (err) {
@@ -87,7 +86,17 @@ app.post("/participants", async (req, res) => {
 });
 
 app.get("/participants", async (req, res) => {
+    try {
 
+		const usersList = await users.find({}).toArray();
+		res.send(usersList);
+
+	} catch (err) {
+
+		console.log(err);
+		res.sendStatus(500);
+
+	}
 
 
 });
