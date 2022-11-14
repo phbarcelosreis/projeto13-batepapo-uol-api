@@ -53,23 +53,26 @@ app.post("/participants", async (req, res) => {
         const formatTime = dayjs(userTime).format("HH:mm:ss")
         const verifyUser = await users.findOne({ name: user.name });
 
-        if(verifyUser){
+        if (verifyUser) {
             return res.status(409).send({ message: 'User já utilizado, favor escolher um diferente!' })
         }
 
-        const validation = userSchema.validate(userJoi, { abortEarly: false});
-        
+        const validation = userSchema.validate(userJoi, { abortEarly: false });
+
         if (validation.error) {
-            console.log(validation.error.details)
+            const vlError = validation.error.details.map(
+                (err) => err.message
+            );
+            return res.status(400).send(vlError);
         }
 
 
-	} catch (err) {
+    } catch (err) {
 
-		console.log(err);
-		res.sendStatus(500);
+        console.log(err);
+        res.sendStatus(500);
 
-	}
+    }
 
 });
 
