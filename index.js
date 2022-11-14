@@ -42,12 +42,14 @@ const messageJoi = joi.object({
     type: joi.string().required().valid("message", "private_message")
 });
 
-
-cont
-
 app.post("/participants", async (req, res) => {
 
+    try {
 
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(500);
+	}
 
 });
 
