@@ -154,7 +154,7 @@ app.get("/messages", async (req, res) => {
     try {
 
         const messageList = await messages.find({ from: user }).limit(newLimit).toArray()
-  
+        res.send(messageList);
 
     } catch (err) {
 
