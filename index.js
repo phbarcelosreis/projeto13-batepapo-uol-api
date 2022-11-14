@@ -110,9 +110,17 @@ app.post("/messages", async (req, res) => {
 
     try{
 
+        const exist = await users.findOne({ name: user });
+        if(!exist){
+            return res.status(422).send({message: "User is not connected"});
+            
+        }
+
     } catch(err) {
+
         console.log(err);
         res.sendStatus(500);
+
     }
 
 });
