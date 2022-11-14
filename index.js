@@ -25,32 +25,32 @@ try {
 
 }
 
-app.post("/participants", (req, res) => {
+app.post("/participants", async (req, res) => {
 
 
 
 });
 
-app.get("/participants", (req, res) => {
-    
+app.get("/participants", async (req, res) => {
 
-
-});
-
-app.post("/messages", (req, res) => {
-    
 
 
 });
 
-app.get("/messages", (req, res) => {
-    
+app.post("/messages", async (req, res) => {
+
 
 
 });
 
-app.post("/status", (req, res) => {
-    
+app.get("/messages", async (req, res) => {
+
+
+
+});
+
+app.post("/status", async (req, res) => {
+
 
 
 });
