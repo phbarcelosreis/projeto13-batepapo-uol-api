@@ -105,8 +105,6 @@ app.post("/messages", async (req, res) => {
 
     const message = req.body;
     const { user } = req.headers;
-    console.log(message);
-    console.log(user);
 
     try {
 
@@ -143,6 +141,7 @@ app.post("/messages", async (req, res) => {
 });
 
 app.get("/messages", async (req, res) => {
+    
     let newLimit = 0;
     const { limit } = req.query;
     const user = req.get("User");
