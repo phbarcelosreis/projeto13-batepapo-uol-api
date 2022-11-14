@@ -149,6 +149,11 @@ app.get("/messages", async (req, res) => {
 
     try {
 
+        const messageList = await messages.find().toArray();
+        if(messageList > limit && limit !== 0){
+            
+        }
+
     } catch (err) {
 
         res.sendStatus(500);
