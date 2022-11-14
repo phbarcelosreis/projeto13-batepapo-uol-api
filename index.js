@@ -68,10 +68,10 @@ app.post("/participants", async (req, res) => {
         await users.insertOne({ ...user, lastStatus: userTime });
         await messages.insertOne({
             from: user.name,
-			to: 'Todos',
-			text: 'entra na sala...',
-			type: 'status',
-			time: formatTime
+            to: 'Todos',
+            text: 'entra na sala...',
+            type: 'status',
+            time: formatTime
         });
         res.sendStatus(201);
 
@@ -89,51 +89,51 @@ app.get("/participants", async (req, res) => {
 
     try {
 
-		const usersList = await users.find({}).toArray();
-		res.send(usersList);
+        const usersList = await users.find({}).toArray();
+        res.send(usersList);
 
-	} catch (err) {
+    } catch (err) {
 
-		console.log(err);
-		res.sendStatus(500);
+        console.log(err);
+        res.sendStatus(500);
 
-	}
+    }
 
 });
 
 app.post("/messages", async (req, res) => {
 
     const message = req.body;
-    const {user} = req.headers;
+    const { user } = req.headers;
     console.log(message);
     console.log(user);
 
-    try{
+    try {
 
         const exist = await users.findOne({ name: user });
         const formatTime = dayjs().format('HH:mm:ss');
 
-        if(!exist){
-            return res.status(422).send({message: "User is not connected"});
+        if (!exist) {
+            return res.status(422).send({ message: "User is not connected" });
         }
 
         const validation = messageJoi.validate(message, { abortEarly: false });
-        if(validation.error){
+        if (validation.error) {
             const vlError = validation.error.details.map(
                 (err) => err.message
             );
             return res.status(400).send(vlError);
         }
-        
+
         await messages.insertOne({
-			...messages,
-			from: user,
-			time: formatTime,
-		});
-        
+            ...messages,
+            from: user,
+            time: formatTime,
+        });
+
         res.sendStatus(201);
 
-    } catch(err) {
+    } catch (err) {
 
         console.log(err);
         res.sendStatus(500);
@@ -144,6 +144,16 @@ app.post("/messages", async (req, res) => {
 
 app.get("/messages", async (req, res) => {
 
+    const limit = Number(req.query.limit);
+    const { user } = req.headers;
+
+    try {
+
+    } catch (err) {
+
+        res.sendStatus(500);
+
+    }
 
 
 });
