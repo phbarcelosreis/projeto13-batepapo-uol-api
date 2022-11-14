@@ -44,7 +44,13 @@ const messageJoi = joi.object({
 
 app.post("/participants", async (req, res) => {
 
+    const {user} = req.body;
+
     try {
+        const verifyUser = await users.findOne({ name: user.name });
+        if(verifyUser){
+            
+        }
 
 	} catch (err) {
 		console.log(err);
