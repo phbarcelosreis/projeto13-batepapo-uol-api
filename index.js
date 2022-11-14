@@ -17,13 +17,33 @@ let db;
 try {
 
     await mongoClient.connect();
-    db = mongoClient.db("Papos");
+    db = mongoClient.db("apiUol");
 
 } catch (err) {
 
     console.log(err);
 
 }
+
+/* set global var */
+
+const users = db.collection("users");
+const messages = db.collection("messages");
+
+/* set joi format */
+
+const userJoi = joi.object({
+    name: joi().string().required()
+});
+
+const messageJoi = joi.object({
+    to: joi.string().required().min(1),
+    text: joi.string().required().min(1),
+    type: joi.string().required().valid("message", "private_message")
+});
+
+
+cont
 
 app.post("/participants", async (req, res) => {
 
