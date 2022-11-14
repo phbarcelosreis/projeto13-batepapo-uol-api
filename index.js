@@ -17,13 +17,45 @@ let db;
 try {
 
     await mongoClient.connect();
-    db = mongoClient.db("Papos")
+    db = mongoClient.db("Papos");
 
 } catch (err) {
 
-    console.log(err)
+    console.log(err);
 
 }
+
+app.post("/participants", (req, res) => {
+
+
+
+});
+
+app.get("/participants", (req, res) => {
+    
+
+
+});
+
+app.post("/messages", (req, res) => {
+    
+
+
+});
+
+app.get("/messages", (req, res) => {
+    
+
+
+});
+
+app.post("/status", (req, res) => {
+    
+
+
+});
+
+setInterval((), 15000);
 
 
 
