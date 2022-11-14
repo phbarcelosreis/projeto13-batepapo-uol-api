@@ -111,10 +111,27 @@ app.post("/messages", async (req, res) => {
     try{
 
         const exist = await users.findOne({ name: user });
+        const formatTime = dayjs().format('HH:mm:ss');
+
         if(!exist){
             return res.status(422).send({message: "User is not connected"});
-            
         }
+
+        const validation = messageJoi.validate(message, { abortEarly: false });
+        if(validation.error){
+            const vlError = validation.error.details.map(
+                (err) => err.message
+            );
+            return res.status(400).send(vlError);
+        }
+        
+        await messages.insertOne({
+			...messages,
+			from: user,
+			time: formatTime,
+		});
+        
+        res.sendStatus(201);
 
     } catch(err) {
 
