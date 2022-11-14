@@ -13,9 +13,16 @@ app.use(express.json());
 const mongoClient = new MongoClient("mongodb://localhost:27017");
 let db;
 
-mongoClient.connect().then(() => {
-    db = mongoClient.db("")
-}).catch((err) => console.log(err));
+try {
+
+    await mongoClient.connect();
+    db = mongoClient.db("Papos")
+    
+} catch (err) {
+
+    console.log(err)
+
+}
 
 
 
