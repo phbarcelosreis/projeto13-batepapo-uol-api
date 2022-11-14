@@ -66,6 +66,16 @@ app.post("/participants", async (req, res) => {
             return res.status(400).send(vlError);
         }
 
+        await users.insertOne({ ...user, lastStatus: userTime });
+        await messages.insertOne({
+            from: user.name,
+			to: 'Todos',
+			text: 'entra na sala...',
+			type: 'status',
+			time: formatTime
+        });
+        res.sendStatus(201);
+
 
     } catch (err) {
 
