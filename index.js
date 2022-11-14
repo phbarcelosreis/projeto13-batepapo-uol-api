@@ -3,7 +3,7 @@ import cors from "cors"
 import { MongoClient } from "mongodb";
 import dayjs from 'dayjs';
 import dotenv from "dotenv";
-import joi from 'joi'
+import Joi from 'joi'
 
 
 const app = express();
@@ -32,29 +32,43 @@ const messages = db.collection("messages");
 
 /* set joi format */
 
-const userJoi = joi.object({
-    name: joi().string().required()
+const userJoi = Joi.object({
+    name: Joi.string().min(1).required()
 });
 
-const messageJoi = joi.object({
-    to: joi.string().required().min(1),
-    text: joi.string().required().min(1),
-    type: joi.string().required().valid("message", "private_message")
+const messageJoi = Joi.object({
+    to: Joi.string().required().min(1),
+    text: Joi.string().required().min(1),
+    type: Joi.string().required().valid("message", "private_message")
 });
 
 app.post("/participants", async (req, res) => {
 
-    const {user} = req.body;
+    const user = req.body;
+    console.log(user)
 
     try {
+
+        const userTime = Date.now();
+        const formatTime = dayjs(userTime).format("HH:mm:ss")
         const verifyUser = await users.findOne({ name: user.name });
+
         if(verifyUser){
             return res.status(409).send({ message: 'User já utilizado, favor escolher um diferente!' })
         }
 
+        const validation = userSchema.validate(userJoi, { abortEarly: false});
+        
+        if (validation.error) {
+            console.log(validation.error.details)
+        }
+
+
 	} catch (err) {
+
 		console.log(err);
 		res.sendStatus(500);
+
 	}
 
 });
@@ -83,7 +97,7 @@ app.post("/status", async (req, res) => {
 
 });
 
-setInterval((), 15000);
+/* setInterval((), 15000); */
 
 
 
