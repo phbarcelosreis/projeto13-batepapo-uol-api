@@ -108,6 +108,13 @@ app.post("/messages", async (req, res) => {
     console.log(message);
     console.log(user);
 
+    try{
+
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+
 });
 
 app.get("/messages", async (req, res) => {
