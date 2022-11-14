@@ -124,7 +124,7 @@ app.post("/messages", async (req, res) => {
         }
 
         await messages.insertOne({
-            ...messages,
+            ...message,
             from: user,
             time: formatTime,
         });
@@ -141,7 +141,7 @@ app.post("/messages", async (req, res) => {
 });
 
 app.get("/messages", async (req, res) => {
-    
+
     let newLimit = 0;
     const { limit } = req.query;
     const user = req.get("User");
@@ -166,11 +166,30 @@ app.get("/messages", async (req, res) => {
 
 app.post("/status", async (req, res) => {
 
+    const user = req.get("User")
+    try {
+        const stats = await users.findOne({ name: user })
+        if (stats === null) {
+            res.status(404);
+        } else {
+            await users.updateOne({ _id: stats._id }, { $set: { lastStatus: Date.now() } })
+            res.status(200);
+        }
 
+    } catch (err) {
+
+        console.log(err);
+        res.sendStatus(500);
+
+    }
 
 });
 
-/* setInterval((), 15000); */
+/* setInterval( async () => {
+    try{
+
+    }
+}, 15000); */
 
 
 
