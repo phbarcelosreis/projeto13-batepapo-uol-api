@@ -86,6 +86,7 @@ app.post("/participants", async (req, res) => {
 });
 
 app.get("/participants", async (req, res) => {
+    
     try {
 
 		const usersList = await users.find({}).toArray();
@@ -97,7 +98,6 @@ app.get("/participants", async (req, res) => {
 		res.sendStatus(500);
 
 	}
-
 
 });
 
