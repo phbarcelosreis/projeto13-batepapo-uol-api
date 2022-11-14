@@ -73,7 +73,7 @@ app.post("/participants", async (req, res) => {
 			type: 'status',
 			time: formatTime
         });
-        res.sendStatus(201)
+        res.sendStatus(201);
 
 
     } catch (err) {
@@ -86,7 +86,7 @@ app.post("/participants", async (req, res) => {
 });
 
 app.get("/participants", async (req, res) => {
-    
+
     try {
 
 		const usersList = await users.find({}).toArray();
@@ -103,7 +103,10 @@ app.get("/participants", async (req, res) => {
 
 app.post("/messages", async (req, res) => {
 
-
+    const message = req.body;
+    const {user} = req.headers;
+    console.log(message);
+    console.log(user);
 
 });
 
