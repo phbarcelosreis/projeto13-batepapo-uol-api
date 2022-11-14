@@ -143,16 +143,18 @@ app.post("/messages", async (req, res) => {
 });
 
 app.get("/messages", async (req, res) => {
+    let newLimit = 0;
+    const { limit } = req.query;
+    const user = req.get("User");
 
-    const limit = Number(req.query.limit);
-    const { user } = req.headers;
+    if (limit) {
+        newLimit = parseInt(limit);
+    }
 
     try {
 
-        const messageList = await messages.find().toArray();
-        if(messageList.length > limit && limit !== 0){
-            
-        }
+        const messageList = await messages.find({ from: user }).limit(newLimit).toArray()
+  
 
     } catch (err) {
 
