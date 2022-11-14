@@ -185,11 +185,35 @@ app.post("/status", async (req, res) => {
 
 });
 
-/* setInterval( async () => {
-    try{
+setInterval(async () => {
+
+    try {
+        const date = Date.now()
+        const formatDate = dayjs(date).format('HH:mm:ss');
+        const listUsers = await users.find().toArray();
+        listUsers.forEach(async (props) => {
+            if (date - props.lastStatus > 10000) {
+                await messages.insertOne({
+                    from: props.name,
+                    to: 'Todos',
+                    text: 'sai da sala...',
+                    type: 'status',
+                    time: formatDate,
+                });
+
+            }
+
+            await users.deleteOne({ name: props.name });
+        })
+
+
+    } catch (err) {
+
+        console.log(err);
 
     }
-}, 15000); */
+
+}, 15000);
 
 
 
